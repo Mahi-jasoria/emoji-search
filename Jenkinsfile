@@ -1,36 +1,56 @@
-pipeline {
+pipeline 
+{
     agent any
 
-    stages {
-        stage('Build') {
-            steps {
-                echo 'Building..'
+    stages 
+    {
+        stage('build')
+        {
+            steps
+            {
+                echo 'build test'
+                
+            }    
+                
+         }  
+         
+         
+        stage('test')
+        {
+            steps
+            {
+                echo 'testing'
             }
+            
+        }    
+                
+                
+                 
+        stage('deploy')
+        {
+            steps
+            {
+                echo 'deploy'
+                
+            }    
+                
+        }        
+                
+                
+                
+    }                         
+                
+                
+    post
+    {
+        
+        always
+        {
+            emailext body: 'summary', subject: 'pipeline status', to: 'mahijasoria@gmail.com'
         }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
-            }
-        }
-    }
-}
-
-post 
-{
-  
-  always
-  {
-    emailext body: 'Summary' , subject: 'pipeline Status' , to: 'mahijasoria@gmail.com'
-      }
-  }
-
-}
-
+    }                
+}            
+            
 
 
 
