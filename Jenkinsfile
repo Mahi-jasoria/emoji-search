@@ -32,7 +32,7 @@ pipeline
             {
                 echo 'deploy'
                 
-                 whoami
+              
                  
                 
                 
