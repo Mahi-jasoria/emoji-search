@@ -31,9 +31,8 @@ pipeline
             steps
             {
                 echo 'deploy'
-                sh '''
-                  whoami
-                '''
+            
+                
                 
             }    
                 
