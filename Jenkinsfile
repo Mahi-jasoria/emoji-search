@@ -30,8 +30,12 @@ pipeline
         {
             steps
             {
-                echo 'deploy'
-                sh whoami
+                sh '''
+                #!/bin/bash
+                    echo 'deploy'
+                    pwd
+                '''
+                
               
                  
                 
