@@ -2,25 +2,17 @@
 
 pipeline {
     agent any
+    environment {
+        EC2_INSTANCE_IP = "13.127.246.18"
+        EC2_INSTANCE_USERNAME = "ubuntu"
+        EC2_INSTANCE_SSH_KEY = "~/.ssh/knowm_hosts"
+    }
     stages {
-        stage('Build') {
+        stage('Deploy code') {
             steps {
-                    checkout scm
-            }
-        }
-        stage('Deploy') {
-            environment {
-                SSH_PRIVATE_KEY = credentials('ssh-private-key')
-                REMOTE_HOST = 'ec2-user@13.127.246.18'
-                REMOTE_DIR = '/var/www/html'
-            }
-            steps {
-                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-private-key', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
-                    sh "scp -i ${SSH_PRIVATE_KEY} -o StrictHostKeyChecking=no -r ${WORKSPACE}/code ${REMOTE_HOST}:${REMOTE_DIR}"
-                }
+                sh "scp -i ${env.EC2_INSTANCE_SSH_KEY} /home/ubuntu ${env.EC2_INSTANCE_USERNAME}@${env.EC2_INSTANCE_IP}:/home/ubuntu"
+                sh "ssh -i ${env.EC2_INSTANCE_SSH_KEY} ${env.EC2_INSTANCE_USERNAME}@${env.EC2_INSTANCE_IP} sudo service nginx restart"
             }
         }
     }
 }
-
-
