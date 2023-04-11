@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'ssh -i ~/.ssh/known_hosts ubuntu@13.127.246.18 "cd /var/www/html && git pull"'
+                sh scp -i  key.pem ubuntu@13.127.246.18:/var/www/html 
             }
         }
     }
