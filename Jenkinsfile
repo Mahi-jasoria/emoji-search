@@ -2,14 +2,15 @@
 pipeline {
     agent any
     stages {
-        stage('Checkout') {
+        stage('build') {
             steps {
-                checkout scm
+                sudo npm install  
+                sudo npm run build
             }
         }
         stage('Deploy') {
             steps {
-                  sh 'scp -i ~/.ssh/known_hosts ubuntu@ 13.127.246.18:/var/www/html'
+                  sh 'scp -r build/* ubuntu@ 13.127.246.18:/var/www/html'
             }
         }
     }
