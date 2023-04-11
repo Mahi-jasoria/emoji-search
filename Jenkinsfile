@@ -1,66 +1,18 @@
-pipeline 
-{
+
+pipeline {
     agent any
-
-    stages 
-    {
-        stage('building')
-        {
-            steps
-            {
-                echo 'build test'
-                
-            }    
-                
-         }  
-         
-         
-        stage('test')
-        {
-            steps
-            {
-                echo 'testing'
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
             }
-            
-        }    
-                
-                
-                 
-        stage('deployment')
-        {
-            steps
-            {
-                sh '''
-                #!/bin/bash
-                    echo 'deploy'
-                    pwd
-                '''
-                
-              
-                 
-                
-                
-                
-            }    
-                
-        }        
-                
-                
-                
-    }                         
-                
-                
-    post
-    {
-        
-        always
-        {
-            emailext body: 'summary', subject: 'pipeline status', to: 'mahijasoria@gmail.com'
         }
-    }                
-}            
-            
-
-
+        stage('Deploy') {
+            steps {
+                sh 'ssh -i "mahima.pem" ubuntu@ec2-13-127-246-18.ap-south-1.compute.amazonaws.com "cd /var/www/html && git pull"'
+            }
+        }
+    }
+}
 
 
