@@ -6,9 +6,11 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Deploy') {
+        stage('build code') {
             steps {
-                sh 'scp -i  mahima.pem ubuntu@13.127.246.18"cd/var/www/html"' 
+                sshagent(['deploy_user']) {
+                   sh "scp -o StrictHostKeyChecking=no    /home/ubuntu/workspace/poc ubuntu@13.127.246.18:/home/ubuntu"
+                   
             }
         }
     }
