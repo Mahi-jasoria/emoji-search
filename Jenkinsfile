@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                scp -i  key.pem ubuntu@13.127.246.18:/var/www/html 
+                sh 'scp -i  mahima.pem ubuntu@13.127.246.18"cd/var/www/html"' 
             }
         }
     }
