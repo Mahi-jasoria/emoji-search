@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                  sh 'scp -i ~/. ssh/known_hosts  ubuntu@ 13.127.246.18:/var/www/html'
+                  sh 'scp -i ~/.ssh/known_hosts ubuntu@ 13.127.246.18:/var/www/html'
             }
         }
     }
