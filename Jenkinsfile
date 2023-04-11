@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh scp -i  key.pem ubuntu@13.127.246.18:/var/www/html 
+                scp -i  key.pem ubuntu@13.127.246.18:/var/www/html 
             }
         }
     }
