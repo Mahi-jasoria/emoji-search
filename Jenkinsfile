@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                sudo npm install  
-                sudo npm run build
+                    sudo npm install  
+                    sudo npm run build
             }
         }
         stage('Deploy') {
