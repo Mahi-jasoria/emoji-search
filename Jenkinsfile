@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                 sh ' ssh -i "mahima.pem" ubuntu@ec2-13-127-246-18 "cd /var/www/html && git pull"'
+                  sh 'scp -i ~/. ssh/known_hosts  ubuntu@ 13.127.246.18:/var/www/html'
             }
         }
     }
