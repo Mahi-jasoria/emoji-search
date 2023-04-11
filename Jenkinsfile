@@ -1,15 +1,14 @@
-
-
 pipeline {
     agent any
     stages {
-        steps {
-            checkout scm
-    }
-    stages {
-        stage('Deploy code') {
+        stage('Checkout') {
             steps {
-                sh "scp -i mahima.pem ubuntu@13.127.246.18:/var/www/html"
+                checkout scm
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'ssh -i ~/.ssh/known_hosts ubuntu@13.127.246.18 "cd /var/www/html && git pull"'
             }
         }
     }
