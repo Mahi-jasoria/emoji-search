@@ -1,16 +1,23 @@
 
+
 pipeline {
     agent any
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                    sudo npm install  
-                    sudo npm run build
+                // Your build steps here
             }
         }
         stage('Deploy') {
+            environment {
+                SSH_PRIVATE_KEY = credentials('ssh-private-key')
+                REMOTE_HOST = 'ec2-user@13.127.246.18'
+                REMOTE_DIR = '/var/www/html'
+            }
             steps {
-                  sh 'scp -r build/* ubuntu@ 13.127.246.18:/var/www/html'
+                withCredentials([sshUserPrivateKey(credentialsId: 'ssh-private-key', keyFileVariable: 'SSH_PRIVATE_KEY')]) {
+                    sh "scp -i ${SSH_PRIVATE_KEY} -o StrictHostKeyChecking=no -r ${WORKSPACE}/code ${REMOTE_HOST}:${REMOTE_DIR}"
+                }
             }
         }
     }
